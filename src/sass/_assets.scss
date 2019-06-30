@@ -22,3 +22,28 @@
     font-weight: 900;
     src: local('nexa'), url('../fonts/nexa-heavy.woff') format('woff');
 }
+
+@font-face {
+    font-family: "opensans";
+    font-style: normal;
+    font-weight: 400;
+    src: local('opensans'), url('../fonts/open-sans-v16-latin-regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: "opensans";
+    font-weight: 300;
+    src: local('opensans'), url('../fonts/open-sans-v16-latin-300.woff') format('woff');
+}
+
+@font-face {
+    font-family: "opensans";
+    font-weight: bold;
+    src: local('opensans'), url('../fonts/open-sans-v16-latin-700.woff') format('woff');
+}
+
+@font-face {
+    font-family: "opensans";
+    font-weight: 900;
+    src: local('opensans'), url('../fonts/open-sans-v16-latin-800.woff') format('woff');
+}

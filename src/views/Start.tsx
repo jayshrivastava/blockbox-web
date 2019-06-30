@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 
+import MoviesList from "./../components/moviesList";
 
 interface StartStates { }
 
@@ -24,8 +25,9 @@ class Start extends Component<any, StartStates> {
                         <p> React Bootstrap </p>
                     </Col>
                 </Row>
+                <MoviesList> </MoviesList>
             </Container>
-        );
+         );
     }
 }
 

@@ -1,0 +1,27 @@
+html, body, #app, #app>div {
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    overflow: hidden;
+    position:absolute; /*it can be fixed too*/
+    margin:0;
+    // left:0; right:0;
+    // top:0; bottom:0;
+    // border: 20px solid black;
+    // border-radius: 25px;
+}
+
+.whitebox {
+    position:absolute; /*it can be fixed too*/
+    left:0; right:0;
+    top:0; bottom:0;
+    margin:auto;
+    // padding: 10%;
+
+    height: 90%;
+    width: 95%;
+    background-color: white;
+    border-radius: 25px;
+
+    overflow: hidden;
+}

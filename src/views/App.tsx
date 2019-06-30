@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Router, Route } from "react-router-dom";
 import Start from "./Start";
 import { Container } from "react-bootstrap";
-import { createBrowserHistory } from 'history';
 
 // Highest level parent container for all views, containers and components
 
@@ -17,24 +16,29 @@ class App extends Component<IAppProps, IAppStates> {
     };
   }
 
-  render() {    
+  render() {
     return (
       <div className="App">
-        <Router history={createBrowserHistory()}>
-          <Route
-            exact
-            path="/"
-            render={props => (
-              <Container>
-            <Start />
-          </Container>
-          )}
-        />
-        </Router>
+        <div className="whitebox">
 
+          <Start />
+
+        </div>
       </div>
     );
   }
 }
 
 export default App;
+
+{/* <Router history={createBrowserHistory()}>
+<Route
+  exact
+  path="/"
+  render={props => (
+    <Container>
+      <Start />
+    </Container>
+  )}
+/>
+</Router> */}
