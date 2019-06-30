@@ -4,11 +4,10 @@ class ApiCallService {
 
     constructor () {
         this.blockboxApiEndpoint = process.env.REACT_APP_BLOCKBOX_API_ENDPOINT!;
-        console.log(process.env)
         if (this.blockboxApiEndpoint === undefined) { throw Error('Missing BLOCKBOX_API_ENDPOINT'); }
     }
     
-    public sendRequest = async (requestMethod: string, route: string, queryParams = null, body = null) => {
+    private sendRequest = async (requestMethod: string, route: string, queryParams = null, body: null|object = null) => {
 
         if (!requestMethod || !route) return;
 
@@ -29,5 +28,22 @@ class ApiCallService {
 
         return json;
     };
+
+    public getMovies = async () => {
+        return await this.sendRequest('GET', '/movies/search/')
+    }
+
+    public createUser = async () => {
+        return await this.sendRequest('POST', '/users/', null, {name: 'blockbox_user'});
+    }
+
+    public getUserById = async (userId: string) => {
+        return await this.sendRequest('GET', '/users/' + userId);
+    }
+
+    public searchMovies = async (query: string) => {
+        return await this.sendRequest('GET', '/movies/search/' + encodeURIComponent(query));
+    }
+
 }
 export default new ApiCallService();

@@ -23,13 +23,6 @@ class MoviesList extends Component<IMoviesListProps, IMoviesListState> {
   }
 
   async componentDidMount() {
-    const response = await ApiCallService.sendRequest('GET', '/movies/search/');
-
-    console.log(response.body);
-    this.setState({
-      movies: response.body,
-      moviesHaveLoaded: true,
-    })
   }
 
   public render() {

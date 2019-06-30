@@ -3,13 +3,15 @@ import { Row, Col, Container } from "react-bootstrap";
 import SearchBar from "./../components/searchBar"
 import ApiCallService from "./../services/apiCallService"
 import MoviesList from "./../components/moviesList";
-import { IMovie } from "./../interfaces"
+import { IMovie, IUser} from "./../interfaces"
 import Switch from "react-switch";
+import store from "store";
 
 interface StartStates {
     movies: IMovie[],
     moviesHaveLoaded: boolean,
     recommendationsSwitchChecked: boolean,
+    user: IUser,
 }
 
 class Start extends Component<any, StartStates> {
@@ -19,17 +21,32 @@ class Start extends Component<any, StartStates> {
             movies: [],
             moviesHaveLoaded: false,
             recommendationsSwitchChecked: false,
+            user: { _id: '', ratingsIndexedByMovieId: {} }
         };
     }
 
     async componentDidMount() {
-        let response = await ApiCallService.sendRequest('GET', '/movies/search/');
+        // set initial movies
+        let moviesResponse = await ApiCallService.getMovies();
 
-        this.setState({
-            movies: response.body,
+        // get/set user
+        const userId = store.get("blockboxUserId");
+        let user: IUser;
+        let userResponse;
+        if (!userId) {
+            userResponse = await ApiCallService.createUser();
+            store.set("blockboxUserId", { _id: userResponse.body._id });
+        } else {
+            userResponse = await ApiCallService.getUserById(userId._id);
+        }
+        user = userResponse.body
+
+        // set state
+        await this.setState({
+            movies: moviesResponse.body,
             moviesHaveLoaded: true,
-        })
-
+            user,
+        });
     }
 
     public searchBarOnSubmitFunction = async (e: any) => {
@@ -39,7 +56,7 @@ class Start extends Component<any, StartStates> {
             moviesHaveLoaded: false,
         })
 
-        let response = await ApiCallService.sendRequest('GET', '/movies/search/' + encodeURIComponent(e.target.elements.query.value));
+        let response = await ApiCallService.searchMovies(e.target.elements.query.value);
 
         this.setState({
             movies: response.body,
