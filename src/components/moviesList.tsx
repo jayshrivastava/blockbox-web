@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import Spinner from 'react-bootstrap/Spinner'
 import { Container, Row, Col } from 'react-bootstrap';
 import ApiCallService from './../services/apiCallService'
+import { IMovie } from './../interfaces'
+
+import MovieCard from './movieCard'
 
 interface IMoviesListProps {
-
+  moviesHaveLoaded: boolean;
+  movies: IMovie[];
 }
 
 interface IMoviesListState {
-  moviesHaveLoaded: boolean;
-  movies: any[];
 }
 
 class MoviesList extends Component<IMoviesListProps, IMoviesListState> {
@@ -17,8 +19,6 @@ class MoviesList extends Component<IMoviesListProps, IMoviesListState> {
     super(props);
 
     this.state = {
-      moviesHaveLoaded: false,
-      movies: [],
     }
   }
 
@@ -35,28 +35,23 @@ class MoviesList extends Component<IMoviesListProps, IMoviesListState> {
   public render() {
     return (
 
-      !this.state.moviesHaveLoaded
+      !this.props.moviesHaveLoaded
         ?
         <Spinner
           animation="border"
         >
         </Spinner>
         :
-        <div className="moviesBox">
-          <Container
+        // <div className="moviesBox">
+          <Container className="moviesBox"
           >
             <Row className="justify-content-md-center">
-            {this.state.movies.map((movie: any) => {
+            {this.props.movies.map((movie: IMovie) => {
               return (
-
-                <Col>
-                  <Container
-                    key={movie.movieId}
-                  >
-
-                    <p> {movie.title}  </p>
-                    <p> {movie.genres} </p>
-                  </Container>
+                <Col sm="12" md="6" lg="4" key={movie.movieId} >
+                  <MovieCard
+                    movie={movie}
+                  /> 
 
                 </Col>
 
@@ -65,13 +60,9 @@ class MoviesList extends Component<IMoviesListProps, IMoviesListState> {
             }
             </Row>
           </Container>
-        </div >
+        // </div >
     )
   }
-
-  // private renderMovies = (movies: any[]) => {
-  //   return ();
-  // }
 }
 
 export default MoviesList;

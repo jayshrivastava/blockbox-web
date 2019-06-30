@@ -16,12 +16,15 @@ html, body, #app, #app>div {
     left:0; right:0;
     top:0; bottom:0;
     margin:auto;
-    // padding: 10%;
 
-    height: 90%;
-    width: 95%;
+    // Isolates white box with black background
+    // height: 90%;
+    // width: 95%;
+    // border-radius: 25px;
+
+    height: 100%;
+    width: 100%;
     background-color: white;
-    border-radius: 25px;
 
     overflow: hidden;
 }
