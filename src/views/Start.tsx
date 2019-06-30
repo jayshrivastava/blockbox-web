@@ -12,6 +12,7 @@ interface StartStates {
     moviesHaveLoaded: boolean,
     recommendationsSwitchChecked: boolean,
     user: IUser,
+    disableAll: boolean;
 }
 
 class Start extends Component<any, StartStates> {
@@ -21,8 +22,25 @@ class Start extends Component<any, StartStates> {
             movies: [],
             moviesHaveLoaded: false,
             recommendationsSwitchChecked: false,
-            user: { _id: '', ratingsIndexedByMovieId: {} }
+            user: { _id: '', ratingsIndexedByMovieId: {} },
+            disableAll: false,
         };
+    }
+
+    async addRating(movieId: string, rating: number ) {
+        const user = this.state.user;
+
+        if (!user.ratingsIndexedByMovieId){
+            user.ratingsIndexedByMovieId = {}
+        }
+        user.ratingsIndexedByMovieId[movieId] = rating / 5;
+
+        const userUpdateRatingsResponse = ApiCallService.updateRatingsForUser({
+            id: this.state.user._id,
+            ratingsIndexedByMovieId: user.ratingsIndexedByMovieId
+        });
+
+        this.setState({ user })
     }
 
     async componentDidMount() {
@@ -54,6 +72,7 @@ class Start extends Component<any, StartStates> {
 
         this.setState({
             moviesHaveLoaded: false,
+            disableAll: true,
         })
 
         let response = await ApiCallService.searchMovies(e.target.elements.query.value);
@@ -61,12 +80,23 @@ class Start extends Component<any, StartStates> {
         this.setState({
             movies: response.body,
             moviesHaveLoaded: true,
+            disableAll: false,
         })
     }
 
     public recommendationsSwitchOnChangeHandler = async () => {
-        this.setState({
+        await this.setState({
             recommendationsSwitchChecked: !this.state.recommendationsSwitchChecked,
+            moviesHaveLoaded: false,
+            disableAll: true,
+        })
+
+        const movies = this.state.recommendationsSwitchChecked ? await ApiCallService.getRecommendations(this.state.user._id) :  await ApiCallService.getMovies();
+
+        this.setState({
+            movies: movies.body,
+            moviesHaveLoaded: true,
+            disableAll: false,
         })
     }
 
@@ -86,7 +116,7 @@ class Start extends Component<any, StartStates> {
                     <Col md="5">
                         <SearchBar
                             onSubmit={this.searchBarOnSubmitFunction.bind(this)}
-                            searchEnabled={true}
+                            searchEnabled={!this.state.disableAll}
                         />
                     </Col>
                     <Col md="4">
@@ -112,6 +142,7 @@ class Start extends Component<any, StartStates> {
                                     width={100}
                                     className="react-switch"
                                     id="material-switch"
+                                    disabled={this.state.disableAll}
                                 />
 
                             </Col>
@@ -123,6 +154,8 @@ class Start extends Component<any, StartStates> {
                     <MoviesList
                         movies={this.state.movies}
                         moviesHaveLoaded={this.state.moviesHaveLoaded}
+                        ratedMovies={this.state.user.ratingsIndexedByMovieId ? this.state.user.ratingsIndexedByMovieId : {}}
+                        addRating={this.addRating.bind(this)}
                     />
 
                 </Row>

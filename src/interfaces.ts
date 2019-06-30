@@ -2,6 +2,7 @@ export interface IMovie {
     movieId: string;
     title: string;
     genres: string[];
+    score?: number;
 }
 
 export interface IUser {
