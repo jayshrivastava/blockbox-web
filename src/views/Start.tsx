@@ -91,6 +91,16 @@ class Start extends Component<any, StartStates> {
             disableAll: true,
         })
 
+        // if no movies have been rated, send an empty array to the movies list
+        if (this.state.user.ratingsIndexedByMovieId === undefined && this.state.recommendationsSwitchChecked) {
+            await this.setState({
+                movies: [],
+                moviesHaveLoaded: true,
+                disableAll: false,
+            })
+            return;
+        }
+
         const movies = this.state.recommendationsSwitchChecked ? await ApiCallService.getRecommendations(this.state.user._id) :  await ApiCallService.getMovies();
 
         this.setState({
