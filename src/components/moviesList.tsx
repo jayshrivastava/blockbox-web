@@ -32,12 +32,15 @@ class MoviesList extends Component<IMoviesListProps, IMoviesListState> {
 
       !this.props.moviesHaveLoaded
         ?
-        <Spinner
-          animation="border"
-        >
-        </Spinner>
+        <Container>
+        <div className="spinnerDiv">
+          <Spinner
+            animation="border"
+          >
+          </Spinner>
+        </div>
+      </Container>
         :
-        // <div className="moviesBox">
           <Container className="moviesBox"
           >
             <Row className="justify-content-md-center">
@@ -57,7 +60,7 @@ class MoviesList extends Component<IMoviesListProps, IMoviesListState> {
             }
             </Row>
           </Container>
-        // </div >
+    
     )
   }
 }
