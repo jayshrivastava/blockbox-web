@@ -30,9 +30,6 @@ class Start extends Component<any, StartStates> {
     async addRating(movieId: string, rating: number ) {
         const user = this.state.user;
 
-        if (!user.ratingsIndexedByMovieId){
-            user.ratingsIndexedByMovieId = {}
-        }
         user.ratingsIndexedByMovieId[movieId] = rating / 5;
 
         const userUpdateRatingsResponse = ApiCallService.updateRatingsForUser({
@@ -81,6 +78,7 @@ class Start extends Component<any, StartStates> {
             movies: response.body,
             moviesHaveLoaded: true,
             disableAll: false,
+            recommendationsSwitchChecked: false,
         })
     }
 
@@ -91,8 +89,8 @@ class Start extends Component<any, StartStates> {
             disableAll: true,
         })
 
-        // if no movies have been rated, send an empty array to the movies list
-        if (this.state.user.ratingsIndexedByMovieId === undefined && this.state.recommendationsSwitchChecked) {
+        // if no movies have been rated, send an empty array to the movies
+        if (Object.keys(this.state.user.ratingsIndexedByMovieId).length === 0 && this.state.recommendationsSwitchChecked) {
             await this.setState({
                 movies: [],
                 moviesHaveLoaded: true,
@@ -164,7 +162,7 @@ class Start extends Component<any, StartStates> {
                     <MoviesList
                         movies={this.state.movies}
                         moviesHaveLoaded={this.state.moviesHaveLoaded}
-                        ratedMovies={this.state.user.ratingsIndexedByMovieId ? this.state.user.ratingsIndexedByMovieId : {}}
+                        ratedMovies={this.state.user.ratingsIndexedByMovieId}
                         addRating={this.addRating.bind(this)}
                     />
 
