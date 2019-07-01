@@ -21,6 +21,8 @@ The initial ratings/movies data is from the [MovieLens Latest Dataset](https://g
 
 As users rate movies, their data is also streamed in real time to MongoDB, so the dataset is consistently updated.
 
+Also [here](https://datascience.stackexchange.com/questions/10844/benchmark-datasets-for-collaborative-filtering) are some good collaborative filtering datasets.
+
 ## Development
 
 ### Overview
