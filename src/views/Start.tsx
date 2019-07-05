@@ -6,6 +6,7 @@ import MoviesList from "./../components/moviesList";
 import { IMovie, IUser} from "./../interfaces"
 import Switch from "react-switch";
 import store from "store";
+import enableInsights from "./../images/bb-enable-insights.svg";
 
 interface StartStates {
     movies: IMovie[],
@@ -113,7 +114,7 @@ class Start extends Component<any, StartStates> {
             <Container className='start-container'>
                 <Row className='header'>
                     <Col sm="12" md="9">
-                        <p className="titleText"> Blockbox Movie Recommender </p>
+                        <p className="titleText"> Blockbox Movie Recommender Demo </p>
                     </Col>
 
                 </Row>
@@ -129,25 +130,26 @@ class Start extends Component<any, StartStates> {
                     </Col>
                     <Col md="4">
                         <Row>
-                        <Col sm="8" >
-                            <p style={{textAlign: 'right', paddingTop: '2%', }}>
+                        <Col sm="7" >
+                            {/* <p style={{textAlign: 'right', paddingTop: '2%', }}>
                             Toggle Recommender: 
-                            </p>
+                            </p> */}
+                            <img className="img-powered-by" src={enableInsights}/>
                         </Col>
-                            <Col sm="4" >
+                            <Col sm="5" >
                                 <Switch
                                     onChange={this.recommendationsSwitchOnChangeHandler}
                                     checked={this.state.recommendationsSwitchChecked}
-                                    onColor="#343a40"
-                                    offColor="#343a40"
-                                    onHandleColor="#2693e6"
+                                    onColor="#0C0952"
+                                    offColor="#0C0952"
+                                    onHandleColor="#7577CD"
                                     handleDiameter={30}
                                     uncheckedIcon={this.renderCheckedIcon('Off')}
                                     checkedIcon={this.renderCheckedIcon('On')}
                                     boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
                                     activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                                    height={40}
-                                    width={100}
+                                    height={55}
+                                    width={120}
                                     className="react-switch"
                                     id="material-switch"
                                     disabled={this.state.disableAll}
