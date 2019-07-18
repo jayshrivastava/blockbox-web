@@ -32,11 +32,14 @@ class MoviesList extends Component<IMoviesListProps, IMoviesListState> {
   }
 
   mapscore(score: number) { 
-    const value = score.toString().substring(2,4) + '%';
-    if (score < 0.5) {
-      return ( <p style={{color:"red"}}> {score.toString().substring(2,4) + '%'} Match </p>) 
+    console.log(score);
+    if (score < 0.4) {
+      return ( <p style={{color:"#fa6150"}}> {score.toString().substring(2,4) + '%'} Confidence </p>) 
     } 
-    return  ( <p style={{color:"green"}}> {score.toString().substring(2,4) + '%'} Match </p>) 
+    if (score > 0.4 && score < 0.5) {
+      return ( <p style={{color:"#ffd500"}}> {score.toString().substring(2,4) + '%'} Confidence </p>) 
+    } 
+    return  ( <p style={{color:"#5cba29"}}> {score.toString().substring(2,4) + '%'} Confidence </p>) 
   }
 
   public render() {
