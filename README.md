@@ -1,14 +1,13 @@
 # Blockbox Movie Recommender Web :movie_camera:
 
+## API Repo
+The machine learning used to power this app is all located in the blockbox-api repo which can be found at https://github.com/jayshrivastava/blockbox-api.
+
 ## Overview
 
 https://blockbox-web.herokuapp.com/
 
 This was created to demonstrate how retail insights, such as product recommendations, can be generated through simple machine learning algorithms. All ML algorithms are written in pure TypeScript and find recommendations based on anonymous ratings data. The app allows users to rate movies and generate recommendations for themselves.
-
-## Machine Learning
-
-The machine learning used to power this app is all located in the [blockbox-api repo](https://github.com/jayshrivastava/blockbox-api "blockbox-api repo")
 
 Recommendations are generated using collaborative filtering. First, users are compared by cosine similarity (comparing the vectors of movie ratings by angle). Then, users are recommended items based on what similar users rated or 'watched'. Each relevant movie that may be of interest to user A is given a score based on how similar user A is to other users and how those users rated said movies. From there, the top scoring movies are recommended to user A.
 
